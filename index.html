@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tuxedo Cat Coffee</title>
+    <link type="text/css" rel="stylesheet" href="catcafe.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<script>
+
+
+    function mouseOver(id)
+    {
+
+    x=document.getElementById(id)//get the picture element
+    x.src=id// change its source to the id
+
+    }
+
+    function mouseOut(id)
+    {
+
+    new_src=id.slice(0,-9)+'.jpg' //slice the id to get the image name without the price
+    x=document.getElementById(id)//get the picture element
+    x.src=new_src// change the picture src to the new source
+
+    }
+    function addproduct(price,product)
+    {
+    x=document.getElementById('order')// get the select element to add the products
+    output=document.getElementById('total')//get the total element to display total
+    option = document.createElement("option");
+    option.text = "$"+price+"-"+product;// formatiing the output
+    x.add(option);//adding the new option to the list of items
+    sum=0.0
+    for (var i = 0; i < x.length; i++)//iterating and adding the product prices
+    {
+    innerhtml=x[i].innerHTML
+    amount=parseFloat(innerhtml.slice(1,5))
+    sum=sum+amount
+    }
+    console.log(sum)
+    output.innerHTML="Total: $"+sum.toFixed(2)
+
+    }
+
+    function clear_order()
+    {
+    x=document.getElementById('order')//get the order element to clear
+    x.innerHTML = '';//make it null
+    output=document.getElementById('total')//get the total element to clear
+    output.innerHTML = '';//make it null
+    }
+
+</script>
+<body>
+<header>
+    <img src="images/logo.png" alt="Tuxedo Cat Coffee"/>
+</header>
+<main>
+    <form id="order_form" name="order_form" action="checkout.html" method="get">
+        <section id="menu">
+            <h2>Menu</h2>
+            <p>Click an item to add it to your order.</p>
+            <ul>
+                <li><a href="#" onclick="addproduct(1.95,' Espresso')"><img onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)" id="images/espresso_info.jpg" src="images/espresso.jpg" alt="espresso"/></a></li>
+                <li><a href="#" onclick="addproduct(2.95,' Latte')"><img onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)" id="images/latte_info.jpg" src="images/latte.jpg" alt="latte"/></a></li>
+                <li><a href="#" onclick="addproduct(3.45,' Cappuccino')"><img onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)" id="images/cappuccino_info.jpg" src="images/cappuccino.jpg" alt="cappuccino"/></a></li>
+                <li><a href="#" onclick="addproduct(1.75,' Coffee')"><img onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)" id="images/coffee_info.jpg" src="images/coffee.jpg" alt="coffee"/></a></li>
+                <li><a href="#" onclick="addproduct(1.95,' Biscotti')"><img onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)" id="images/biscotti_info.jpg" src="images/biscotti.jpg" alt="biscotti"/></a></li>
+                <li><a href="#" onclick="addproduct(2.95,' Scone')"><img onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)" id="images/scone_info.jpg" src="images/scone.jpg" alt="scone"/></a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Your Order</h2>
+            <section>
+                <select id="order" name="order" size="6">
+                </select>
+                <p id="total">&nbsp;</p>
+            </section>
+            <section id="buttons">
+                <a href="checkout.html"><input type="button" name="place_order" id="place_order" value="Place Order"></a>
+                <a onclick="clear_order()"> <input type="button" name="clear_order" id="clear_order" value="Clear Order"> </a>
+            </section>
+        </section>
+
+    </form>
+</main>
+</body>
+</html>
